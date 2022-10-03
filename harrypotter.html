@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-network@latest/styles/vis-network.css" type="text/css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network@latest/dist/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1000px;
+            height: 1000px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"font": {"color": "white"}, "id": "Albus Dumbledore", "label": "Albus Dumbledore", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "id": "Harry Potter", "label": "Harry Potter", "shape": "dot", "size": 32}, {"font": {"color": "white"}, "id": "Nicolas Flamel", "label": "Nicolas Flamel", "shape": "dot", "size": 3}, {"font": {"color": "white"}, "id": "Minerva McGonagall", "label": "Minerva McGonagall", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "James Potter", "label": "James Potter", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Cornelius Fudge", "label": "Cornelius Fudge", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Dedalus Diggle", "label": "Dedalus Diggle", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Griphook", "label": "Griphook", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Hedwig", "label": "Hedwig", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "id": "Draco Malfoy", "label": "Draco Malfoy", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "id": "Goyle", "label": "Goyle", "shape": "dot", "size": 3}, {"font": {"color": "white"}, "id": "Fat Friar", "label": "Fat Friar", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Neville Longbottom", "label": "Neville Longbottom", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Nearly Headless Nick", "label": "Nearly Headless Nick", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Percy Weasley", "label": "Percy Weasley", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Fang", "label": "Fang", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "id": "Seamus Finnigan", "label": "Seamus Finnigan", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Parvati Patil", "label": "Parvati Patil", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Peeves", "label": "Peeves", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Oliver Wood", "label": "Oliver Wood", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Charlie Weasley", "label": "Charlie Weasley", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Hermione Granger", "label": "Hermione Granger", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Alicia Spinnet", "label": "Alicia Spinnet", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "id": "Katie Bell", "label": "Katie Bell", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Lee Jordan", "label": "Lee Jordan", "shape": "dot", "size": 3}, {"font": {"color": "white"}, "id": "Fluffy", "label": "Fluffy", "shape": "dot", "size": 4}, {"font": {"color": "white"}, "id": "Fred Weasley", "label": "Fred Weasley", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "id": "Crabbe", "label": "Crabbe", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "id": "Norbert", "label": "Norbert", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "id": "Ronan", "label": "Ronan", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "id": "Firenze", "label": "Firenze", "shape": "dot", "size": 3}, {"font": {"color": "white"}, "id": "Trevor", "label": "Trevor", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "id": "Ginny Weasley", "label": "Ginny Weasley", "shape": "dot", "size": 1}]);
+        edges = new vis.DataSet([{"from": "Albus Dumbledore", "label": 1, "to": "Harry Potter", "weight": 1, "weights": 16}, {"from": "Albus Dumbledore", "label": 1, "to": "Nicolas Flamel", "weight": 1, "weights": 3}, {"from": "Harry Potter", "label": 1, "to": "Minerva McGonagall", "weight": 1, "weights": 6}, {"from": "Harry Potter", "label": 1, "to": "James Potter", "weight": 1, "weights": 5}, {"from": "Harry Potter", "label": 1, "to": "Cornelius Fudge", "weight": 1, "weights": 2}, {"from": "Harry Potter", "label": 1, "to": "Dedalus Diggle", "weight": 1, "weights": 6}, {"from": "Harry Potter", "label": 1, "to": "Griphook", "weight": 1, "weights": 5}, {"from": "Harry Potter", "label": 1, "to": "Hedwig", "weight": 1, "weights": 17}, {"from": "Harry Potter", "label": 1, "to": "Draco Malfoy", "weight": 1, "weights": 25}, {"from": "Harry Potter", "label": 1, "to": "Goyle", "weight": 1, "weights": 14}, {"from": "Harry Potter", "label": 1, "to": "Fat Friar", "weight": 1, "weights": 3}, {"from": "Harry Potter", "label": 1, "to": "Neville Longbottom", "weight": 1, "weights": 1}, {"from": "Harry Potter", "label": 1, "to": "Nearly Headless Nick", "weight": 1, "weights": 4}, {"from": "Harry Potter", "label": 1, "to": "Percy Weasley", "weight": 1, "weights": 2}, {"from": "Harry Potter", "label": 1, "to": "Fang", "weight": 1, "weights": 11}, {"from": "Harry Potter", "label": 1, "to": "Seamus Finnigan", "weight": 1, "weights": 4}, {"from": "Harry Potter", "label": 1, "to": "Parvati Patil", "weight": 1, "weights": 2}, {"from": "Harry Potter", "label": 1, "to": "Peeves", "weight": 1, "weights": 6}, {"from": "Harry Potter", "label": 1, "to": "Oliver Wood", "weight": 1, "weights": 7}, {"from": "Harry Potter", "label": 1, "to": "Charlie Weasley", "weight": 1, "weights": 3}, {"from": "Harry Potter", "label": 1, "to": "Hermione Granger", "weight": 1, "weights": 1}, {"from": "Harry Potter", "label": 1, "to": "Alicia Spinnet", "weight": 1, "weights": 6}, {"from": "Harry Potter", "label": 1, "to": "Katie Bell", "weight": 1, "weights": 5}, {"from": "Harry Potter", "label": 1, "to": "Lee Jordan", "weight": 1, "weights": 14}, {"from": "Harry Potter", "label": 1, "to": "Fluffy", "weight": 1, "weights": 39}, {"from": "Harry Potter", "label": 1, "to": "Nicolas Flamel", "weight": 1, "weights": 21}, {"from": "Harry Potter", "label": 1, "to": "Fred Weasley", "weight": 1, "weights": 11}, {"from": "Harry Potter", "label": 1, "to": "Crabbe", "weight": 1, "weights": 2}, {"from": "Harry Potter", "label": 1, "to": "Norbert", "weight": 1, "weights": 32}, {"from": "Harry Potter", "label": 1, "to": "Ronan", "weight": 1, "weights": 23}, {"from": "Harry Potter", "label": 1, "to": "Firenze", "weight": 1, "weights": 27}, {"from": "Harry Potter", "label": 1, "to": "Trevor", "weight": 1, "weights": 1}, {"from": "Harry Potter", "label": 1, "to": "Ginny Weasley", "weight": 1, "weights": 10}, {"from": "Hedwig", "label": 1, "to": "Fluffy", "weight": 1, "weights": 6}, {"from": "Nicolas Flamel", "label": 1, "to": "Fluffy", "weight": 1, "weights": 4}, {"from": "Draco Malfoy", "label": 1, "to": "Goyle", "weight": 1, "weights": 4}, {"from": "Goyle", "label": 1, "to": "Crabbe", "weight": 1, "weights": 6}, {"from": "Fang", "label": 1, "to": "Norbert", "weight": 1, "weights": 6}, {"from": "Alicia Spinnet", "label": 1, "to": "Lee Jordan", "weight": 1, "weights": 4}, {"from": "Lee Jordan", "label": 1, "to": "Fred Weasley", "weight": 1, "weights": 2}, {"from": "Fluffy", "label": 1, "to": "Firenze", "weight": 1, "weights": 4}, {"from": "Ronan", "label": 1, "to": "Firenze", "weight": 1, "weights": 6}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
